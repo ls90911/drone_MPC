@@ -1,4 +1,4 @@
-function [] = test_polynomial(P,t0,tf)
+function [dP,ddP,p_tan_phi] = test_polynomial(P,t0,tf)
 % P = fliplr(P');
 
 % pos = polyval(P,t0);
@@ -24,20 +24,22 @@ function [] = test_polynomial(P,t0,tf)
 
 
 
-dP = [P(2) 2*P(3) 3*P(4) 4*P(5) 5*P(6)];
-ddP = [2*P(3) 6*P(4) 12*P(5) 20*P(6)];
+dP = [P(2) 2*P(3) 3*P(4) 4*P(5) 5*P(6) 0];
+ddP = [2*P(3) 6*P(4) 12*P(5) 20*P(6) 0 0];
 
 % calculate pos at t0 and tf
 
 p0 = get_value_from_coefficient(P,t0);
 pf = get_value_from_coefficient(P,tf);
-fprintf("p0 = %f, pf = %f\n",p0,pf);
+fprintf('p0 = %f, pf = %f\n',p0,pf);
 
 v0 = get_value_from_coefficient(dP,t0);
 vf = get_value_from_coefficient(dP,tf);
-fprintf("v0 = %f, vf = %f\n",v0,vf);
+fprintf('v0 = %f, vf = %f\n',v0,vf);
 
 a0 = get_value_from_coefficient(ddP,t0);
 af = get_value_from_coefficient(ddP,tf);
-fprintf("a0 = %f, af = %f\n",a0,af);
+fprintf('a0 = %f, af = %f\n',a0,af);
+
+p_tan_phi = (ddP+0.5*dP)/9.8;
 end
