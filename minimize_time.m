@@ -1,10 +1,10 @@
 function [P_min,t_min,P_tan_phi_min] = minimize_time(pos_constrain,vel_constrain,acc_constrains,t0)
-deltaT = 5.0;
+deltaT = 3.0;
 P_min = -1;
 P_tan_phi_min = -1;
 t_min = -1;
 while(1)
-    deltaT = deltaT - 0.3;
+    deltaT = deltaT - 0.2;
     P = coefficient_with_costrains(pos_constrain,vel_constrain,acc_constrains,t0,deltaT);
     [dP,ddP,P_tan_phi] = get_coefficient_from_P(P);
     if is_saturated(P_tan_phi,t0,t0+deltaT)
@@ -19,7 +19,7 @@ end
 
 function flag_saturated = is_saturated(P_tan_phi,t0,tf)
 flag_saturated = 0;
-for t = t0:(tf-t0)/1000:tf
+for t = t0:(tf-t0)/10:tf
     if abs(atan(get_value_from_coefficient(P_tan_phi,t))) > 25/180*pi
         flag_saturated = 1;
         break;
